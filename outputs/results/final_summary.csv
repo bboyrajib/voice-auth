@@ -1,0 +1,11 @@
+Model,Split,EER,F1,ROC-AUC,Accuracy,Precision,Recall
+SVM,test,0.0083,0.9943,0.9992,0.9912,0.9981,0.9906
+SVM,generalization_test,0.0067,0.9969,0.9987,0.9953,0.9973,0.9965
+Random Forest,test,0.0305,0.9834,0.9956,0.9744,0.989,0.9779
+Random Forest,generalization_test,0.0293,0.9854,0.9964,0.9781,0.9859,0.985
+Gradient Boosting,test,0.0346,0.982,0.9949,0.9722,0.9871,0.9769
+Gradient Boosting,generalization_test,0.0311,0.9868,0.9956,0.9801,0.9859,0.9876
+CNN,test,0.0081,0.9881,0.9993,0.9817,0.999,0.9774
+CNN,generalization_test,0.0036,0.9942,0.9991,0.9914,0.9991,0.9894
+CNN-LSTM,test,0.0035,0.9965,0.9996,0.9945,0.9991,0.9939
+CNN-LSTM,generalization_test,0.0004,0.9978,1.0,0.9967,1.0,0.9956

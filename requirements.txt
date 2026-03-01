@@ -1,0 +1,42 @@
+# Core
+numpy==1.26.4
+pandas==2.2.1
+scipy==1.13.0
+scikit-learn==1.4.2
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# Audio processing
+librosa==0.10.1
+soundfile==0.12.1
+audioread==3.0.1
+pydub==0.25.1
+
+# Deep learning
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.6.0+cu124
+torchvision==0.21.0+cu124
+torchaudio==2.6.0+cu124
+
+# Interpretability
+shap==0.45.0
+
+# Experiment tracking & config
+pyyaml==6.0.1
+tqdm==4.66.2
+joblib==1.4.0
+
+# Notebook
+jupyter==1.0.0
+ipykernel==6.29.4
+
+# Optional: wav2vec2 (transformers)
+transformers==4.40.0
+datasets==2.19.0
+
+# Codec simulation
+ffmpeg-python==0.2.0
+
+
+streamlit 
+plotly

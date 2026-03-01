@@ -1,0 +1,72 @@
+# config.yaml — Central configuration for all scripts and notebooks
+# Edit this file to change experimental parameters globally.
+
+project:
+  name: "ai-speech-detection-banking"
+  seed: 42
+  student: "Rajib Roy"
+
+paths:
+  data_raw_genuine: "data/raw/genuine"
+  data_raw_synthetic: "data/raw/synthetic"
+  data_processed: "data/processed"
+  data_augmented: "data/augmented"
+  outputs_models: "outputs/models"
+  outputs_results: "outputs/results"
+  outputs_plots: "outputs/plots"
+
+audio:
+  target_sr: 8000          # Banking telephony: 8 kHz
+  min_duration: 3.0        # Seconds — minimum utterance length
+  max_duration: 8.0        # Seconds — maximum utterance length
+  codec: "g711"            # Codec simulation: g711 | none
+
+features:
+  n_mfcc: 40               # Number of MFCC coefficients
+  n_mels: 128              # Mel filterbank bins for spectrograms
+  n_fft: 512               # FFT window size
+  hop_length: 128          # Hop length for STFT
+  include_delta: true      # Include delta and delta-delta MFCCs
+  include_delta_delta: true
+
+augmentation:
+  snr_levels: [5, 10, 15, 20]   # dB — noise levels to simulate
+  noise_types: ["white", "babble"]
+  apply_codec: true
+
+splits:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+  speaker_independent: true     # CRITICAL: never share speakers across splits
+
+models:
+  classical:
+    svm:
+      kernel: "rbf"
+      C: [0.1, 1, 10, 100]      # Grid search values
+      gamma: ["scale", "auto"]
+    random_forest:
+      n_estimators: [100, 300]
+      max_depth: [10, 20, null]
+    gradient_boosting:
+      n_estimators: [100, 200]
+      learning_rate: [0.05, 0.1]
+  deep:
+    cnn:
+      input_height: 128          # Mel bins
+      input_width: 128           # Time frames (padded/cropped)
+      batch_size: 32
+      epochs: 50
+      lr: 0.001
+      patience: 10               # Early stopping
+    cnn_lstm:
+      batch_size: 16             # Smaller due to memory
+      epochs: 50
+      lr: 0.001
+      patience: 10
+
+evaluation:
+  primary_metric: "eer"          # Equal Error Rate
+  secondary_metrics: ["accuracy", "f1", "roc_auc", "precision", "recall"]
+  significance_test: "mcnemar"

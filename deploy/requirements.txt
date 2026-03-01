@@ -1,0 +1,13 @@
+streamlit
+numpy
+torch
+torchaudio
+joblib
+plotly
+librosa
+scikit-learn==1.4.2
+soundfile
+imbalanced-learn
+setuptools
+pydub
+streamlit-mic-recorder
