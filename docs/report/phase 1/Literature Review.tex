@@ -1,0 +1,658 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{caption}
+\usepackage[nottoc]{tocbibind}
+
+% ── Colours ───────────────────────────────────────────────────────────────────
+\definecolor{darkblue}{HTML}{1F4E79}
+\definecolor{medblue}{HTML}{2E74B5}
+\definecolor{lightblue}{HTML}{D6E4F0}
+\definecolor{altrow}{HTML}{EBF3FB}
+\definecolor{greenbg}{HTML}{E2EFDA}
+\definecolor{headerbg}{HTML}{1F4E79}
+
+% ── tcolorbox ─────────────────────────────────────────────────────────────────
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{keybox}[1]{
+  colback=greenbg, colframe=darkblue, coltitle=white,
+  fonttitle=\bfseries, title={#1},
+  breakable, boxrule=0.8pt, arc=3pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+\newtcolorbox{notebox}{
+  colback=lightblue!60, colframe=medblue,
+  boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=3pt, bottom=3pt
+}
+
+% ── Section formatting ────────────────────────────────────────────────────────
+\titleformat{\section}{\Large\bfseries\color{darkblue}}{\thesection.}{0.6em}{}
+  [\color{medblue}\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{medblue}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{darkblue!80}}
+  {\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+\titlespacing*{\subsection}{0pt}{10pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{8pt}{4pt}
+
+% ── Header / Footer ───────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\color{darkblue}\textbf{Literature Review \& Benchmark Survey}}
+\fancyhead[R]{\small\color{darkblue}Rajib Roy --- 24459 $|$ IISc M.Tech (AI)}
+\fancyfoot[C]{\small\thepage}
+\fancyfoot[R]{\small\color{gray}Phase 1 Deliverable 1 --- April 2026}
+
+% ── Hyperref ──────────────────────────────────────────────────────────────────
+\hypersetup{colorlinks=true, linkcolor=medblue, urlcolor=medblue,
+  pdftitle={Literature Review and Benchmark Survey --- Rajib Roy},
+  pdfauthor={Rajib Roy}}
+
+% ── Table column types ────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ── Lists ─────────────────────────────────────────────────────────────────────
+\setlist[itemize]{leftmargin=1.4em, itemsep=3pt, topsep=4pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=3pt, topsep=4pt}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\begin{document}
+\pagenumbering{roman}
+
+% ── Title Page ────────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{center}
+    \vspace*{1cm}
+    {\large\color{darkblue}M.Tech.\ (Online) --- Artificial Intelligence}\\[4pt]
+    {\large\color{darkblue}Indian Institute of Science, Bangalore}\\[2.5cm]
+    {\Huge\bfseries\color{darkblue}Literature Review \&}\\[6pt]
+    {\Huge\bfseries\color{darkblue}Benchmark Survey}\\[1.2cm]
+    {\color{medblue}\rule{\linewidth}{2pt}}\\[0.6cm]
+    {\LARGE\bfseries\color{medblue}
+      Detection of AI-Generated and Cloned Speech\\[6pt]
+      to Strengthen Voice-Based Authentication\\[6pt]
+      in Banking Environments}\\[0.4cm]
+    {\color{medblue}\rule{\linewidth}{1pt}}\\[2cm]
+    \begin{tabular}{@{}L{4.2cm}L{9cm}@{}}
+      \rowcolor{lightblue}\textbf{Student Name}   & Rajib Roy \\
+      \rowcolor{white}    \textbf{Student Number} & 24459 \\
+      \rowcolor{lightblue}\textbf{Programme}      & M.Tech.\ in Artificial Intelligence \\
+      \rowcolor{white}    \textbf{Internal Guide} & Dr.\ Anil Rahate, Practice Head --- AI, Wipro Ltd \\
+      \rowcolor{lightblue}\textbf{IISc Mentor}    & Prof.\ Chandra Sekhar Seelamantula,
+                                                     Dept.\ of Electrical Engineering, IISc \\
+      \rowcolor{white}    \textbf{Deliverable}    & Phase 1 --- Deliverable 1 \\
+      \rowcolor{lightblue}\textbf{Date}           & April 2026 \\
+    \end{tabular}
+  \end{center}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Overview and Scope}
+% ═════════════════════════════════════════════════════════════════════════════
+
+This document is \textbf{Phase 1 Deliverable 1} of the M.Tech.\ project. It provides a
+structured survey of the published literature on synthetic speech detection (commonly
+framed as ``anti-spoofing'' in the automatic speaker verification community), with a focus
+on methods, datasets, evaluation protocols, and robustness findings relevant to the
+project's banking telephony deployment context.
+
+\textbf{Scope of this document:} This is a survey of \emph{existing published work}. It
+does not report results from this project's own models, dataset, or experiments, as those
+activities are planned for Phase 2. The purpose is to establish what the published literature
+says, identify gaps, and record the design decisions taken as a consequence --- decisions
+that will govern the methodology implemented in Phases 2 and 3.
+
+The survey covers five areas:
+\begin{enumerate}
+  \item The ASVspoof challenge series --- the field's primary benchmarking platform.
+  \item Classical and handcrafted feature approaches.
+  \item Deep learning approaches.
+  \item Robustness, codec effects, and domain mismatch.
+  \item Gaps in the existing literature and how this project addresses them.
+\end{enumerate}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{The ASVspoof Challenge Series}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Background}
+
+The ASVspoof challenge series, established in 2015 and running through 2021, is the
+primary benchmarking platform for synthetic speech detection (Nautsch et al., 2021). Each
+edition defined standardised datasets, evaluation protocols, and baseline systems, enabling
+reproducible comparison across research groups.
+
+The challenge distinguishes two principal attack scenarios:
+
+\begin{itemize}
+  \item \textbf{Logical Access (LA):} Attacks generated by text-to-speech (TTS) synthesis
+    or voice conversion algorithms. This is the attack type most relevant to banking fraud.
+  \item \textbf{Physical Access (PA):} Replay attacks, where genuine recordings are
+    replayed through a loudspeaker at a microphone.
+\end{itemize}
+
+\subsection{ASVspoof 2019}
+
+ASVspoof 2019 (Todisco et al., 2019) is the most directly relevant edition to this
+project. Its LA dataset covers 19 TTS and voice-conversion systems (A01--A19), providing
+broad coverage of synthesis architectures from that period.
+
+Key contributions:
+\begin{itemize}
+  \item The \textbf{Constant-Q Cepstral Coefficient (CQCC)} feature was introduced as the
+    official baseline, achieving EER $\approx 0.10$ with a GMM classifier on the LA track.
+    CQCC provides finer frequency resolution at low frequencies than standard MFCCs, better
+    capturing fine spectral structure in vocoder output.
+  \item The \textbf{Equal Error Rate (EER)} --- the point on the detection error tradeoff
+    curve where the false acceptance rate equals the false rejection rate --- was established
+    as the primary evaluation metric for the field.
+  \item ASVspoof 2019 generated the most widely-used benchmark dataset for subsequent
+    anti-spoofing research, covering statistical parametric, neural, and hybrid TTS systems.
+\end{itemize}
+
+\subsection{ASVspoof 2021}
+
+ASVspoof 2021 extended the challenge to evaluate systems under \textbf{matched and
+mismatched channel conditions}:
+
+\begin{itemize}
+  \item Systems trained on clean studio recordings degraded substantially under telephone
+    channel evaluation, with EER increases of 5--15 percentage points reported across
+    participating systems.
+  \item The challenge demonstrated that codec compression and channel noise modify both the
+    genuine speech characteristics and the spoofing artefacts the detectors rely upon,
+    making clean-data-trained systems unreliable in real deployments.
+  \item This finding represents a critical gap between published benchmark performance and
+    real-world banking telephony deployment, where audio is transmitted over G.711 or
+    similar codecs at 8\,kHz.
+\end{itemize}
+
+\subsection{Detection Cost Function (t-DCF)}
+
+Kinnunen et al.\ (2020) introduced the tandem Detection Cost Function (t-DCF) as a more
+operationally realistic performance measure:
+
+\begin{itemize}
+  \item Unlike EER, t-DCF jointly assesses the combined error rate of a spoofing
+    countermeasure and an ASV system, accounting for the prior probability of attack and
+    the relative cost of false acceptance versus false rejection.
+  \item This reflects the fact that a countermeasure is not used in isolation --- it
+    operates as a front-end to an existing speaker verification system.
+  \item t-DCF has been adopted as a co-primary metric alongside EER in ASVspoof 2021.
+\end{itemize}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Classical and Handcrafted Feature Approaches}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Systematic Feature Comparison}
+
+Sahidullah et al.\ (2015) provided the most comprehensive comparison of acoustic features
+for anti-spoofing at the time of ASVspoof 2015:
+
+\begin{itemize}
+  \item Features capturing \textbf{fine spectral structure} consistently outperformed
+    standard 13-coefficient MFCCs against vocoder-based attacks. Specifically, using 40
+    MFCC coefficients (capturing higher-order cepstral details) outperformed the
+    conventional 13-coefficient setting by a substantial margin.
+  \item The inclusion of \textbf{delta and delta-delta coefficients} (encoding temporal
+    rate-of-change of the spectral envelope) provided consistent gains across all tested
+    classifiers. This is attributed to the difference in spectral dynamics between genuine
+    articulation --- which produces continuously evolving spectral envelopes --- and TTS
+    vocoders, which impose smoother and more regular temporal evolution.
+  \item \textbf{Harmonic-to-Noise Ratio (HNR)} and \textbf{spectral shape features}
+    (centroid, bandwidth, rolloff) were identified as informative secondary features,
+    reflecting the characteristically clean harmonic structure of TTS vocoders.
+\end{itemize}
+
+\subsection{Phase Spectrum Features}
+
+Patel and Patil (2015) demonstrated that TTS vocoders introduce \textbf{phase coherence
+artefacts} that are invisible in the magnitude spectrum:
+
+\begin{itemize}
+  \item Vocoders generate speech with artificially coherent phase structures, whereas
+    natural speech exhibits complex and partially random phase relationships across frames.
+  \item Features derived from the instantaneous phase spectrum, group delay, or phase
+    difference between adjacent frames were shown to capture vocoder artefacts that
+    MFCC-based features miss entirely.
+  \item Combining phase-based features with MFCC features yielded additive accuracy
+    improvements on ASVspoof 2015, motivating their inclusion in broader feature sets.
+\end{itemize}
+
+\subsection{SVM Classifiers for Anti-Spoofing}
+
+Support Vector Machines with RBF kernels have been the dominant classifiers for
+handcrafted features throughout the ASVspoof 2015--2019 era:
+
+\begin{itemize}
+  \item SVMs generalise well with relatively small training sets, compared to the large
+    datasets needed by deep learning models, and have strong theoretical foundations for
+    binary classification in high-dimensional feature spaces.
+  \item The RBF kernel can model non-linear decision boundaries without requiring explicit
+    feature interaction terms.
+  \item Probabilistic calibration via Platt scaling enables threshold tuning at the EER
+    operating point, which is important for class-imbalanced detection problems.
+  \item The official ASVspoof 2019 baseline used SVM with CQCC features, and SVM remains
+    a strong and reproducible reference system in the field.
+\end{itemize}
+
+\subsection{Summary of Findings}
+
+\begin{keybox}{Key Takeaways --- Classical Features}
+  \begin{itemize}
+    \item Delta and delta-delta MFCCs are the strongest discriminators: they capture
+      temporal rate-of-change, which is smoother and more regular in TTS output.
+    \item 40 MFCC coefficients substantially outperform the conventional 13-coefficient
+      setting for vocoder detection.
+    \item Phase coherence features capture artefacts invisible in the magnitude spectrum,
+      providing complementary and non-redundant discriminative information.
+    \item SVM with RBF kernel is a well-validated, reproducible classical baseline.
+  \end{itemize}
+\end{keybox}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Deep Learning Approaches}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{CNN-Based Systems}
+
+The transition to deep learning in anti-spoofing accelerated with ASVspoof 2019.
+Alzantot et al.\ (2019) showed that a ResNet architecture trained end-to-end on log-Mel
+spectrograms could match the CQCC + SVM official baseline:
+
+\begin{itemize}
+  \item The ResNet learns hierarchical spectral representations directly from the input
+    spectrogram, eliminating hand-engineered features.
+  \item The model used \textbf{global average pooling across the time dimension} to
+    produce a fixed-length representation from variable-length utterances.
+  \item This temporal pooling operation discards the order and dynamics of the spectral
+    sequence, retaining only average spectral content. This is a known limitation when
+    the discriminative signal includes temporal patterns --- which vocoder artefacts do.
+\end{itemize}
+
+\subsection{Hybrid CNN-LSTM Architectures}
+
+Multiple subsequent studies have found that hybrid CNN-LSTM architectures consistently
+outperform purely convolutional models for anti-spoofing:
+
+\begin{itemize}
+  \item The \textbf{CNN front-end} acts as a local spectral feature extractor, identifying
+    frequency-domain artefacts within short analysis windows.
+  \item The \textbf{LSTM layer} then models the temporal evolution of these spectral
+    features across the utterance, capturing prosodic regularity and temporal dynamics
+    that CNN global pooling discards.
+  \item Using \textbf{frequency-only pooling} (pooling across frequency but not time)
+    after the CNN preserves the temporal sequence, enabling the LSTM to process the
+    full temporal context.
+  \item Bidirectional LSTMs, which process the sequence in both forward and backward
+    directions, capture dependencies that span the full utterance and have shown
+    further improvements.
+\end{itemize}
+
+\subsection{Self-Supervised Representations: wav2vec 2.0}
+
+Baevski et al.\ (2020) introduced wav2vec 2.0, a transformer-based model pre-trained
+on 960 hours of unlabelled speech via a contrastive self-supervised objective:
+
+\begin{itemize}
+  \item When the frozen or fine-tuned wav2vec 2.0 encoder is used for spoofing detection,
+    it achieves competitive EERs without any task-specific feature engineering, suggesting
+    that self-supervised pre-training learns representations that are also discriminative
+    for synthetic speech detection.
+  \item Full fine-tuning requires substantial GPU memory (16\,GB+) and training time.
+    Feature extraction from a frozen encoder is computationally tractable and still
+    competitive.
+  \item This line of work suggests that large pre-trained speech models encode
+    properties of natural speech that synthetic systems fail to fully replicate.
+\end{itemize}
+
+\subsection{Graph Attention: AASIST}
+
+Wang et al.\ (2021) introduced AASIST (Audio Anti-Spoofing using Integrated
+Spectro-Temporal Graph Attention Networks):
+
+\begin{itemize}
+  \item AASIST applies graph attention networks to model relationships between nodes
+    spanning both spectral and temporal dimensions simultaneously, capturing
+    cross-frequency and cross-time dependencies not modelled by CNNs or LSTMs
+    independently.
+  \item It achieves EER $\approx 0.02$ on ASVspoof 2021 LA --- the state of the art
+    at the time of publication.
+  \item With approximately 300,000 parameters, AASIST is relatively compact for its
+    performance level, making it practically deployable.
+\end{itemize}
+
+\subsection{Comparative Published Performance}
+
+Table~\ref{tab:lit_comparison} summarises indicative EER values from key published
+anti-spoofing systems on ASVspoof datasets. These numbers represent the state of the
+art surveyed during Phase 1 and provide context for understanding the field's progress.
+
+\medskip
+\begin{center}
+\begin{tabular}{L{3.2cm}C{2.8cm}L{3.8cm}C{1.6cm}L{2.6cm}}
+  \toprule
+  \rowcolor{headerbg}
+  \color{white}\textbf{Reference} &
+  \color{white}\textbf{Dataset} &
+  \color{white}\textbf{Method} &
+  \color{white}\textbf{EER $\downarrow$} &
+  \color{white}\textbf{Notes} \\
+  \midrule
+  Todisco et al.\ (2019) &
+  ASVspoof 2019 LA & CQCC + GMM & $\sim$0.10 & Official baseline \\
+  \rowcolor{altrow}
+  Alzantot et al.\ (2019) &
+  ASVspoof 2019 LA & ResNet spectrogram & $\sim$0.05 & CNN-based \\
+  Wang et al.\ (2021) &
+  ASVspoof 2021 LA & AASIST & $\sim$0.02 & SOTA at publication \\
+  \rowcolor{altrow}
+  Tak et al.\ (2022) &
+  ASVspoof 2021 LA & RawBoost + ResNet & $\sim$0.015 & Data augmentation \\
+  \bottomrule
+\end{tabular}
+\captionof{table}{Indicative EER of key published anti-spoofing systems. Values are
+approximate; exact results vary with evaluation protocol. This table represents the
+published state of the art at the time of the Phase 1 literature survey.}
+\label{tab:lit_comparison}
+\end{center}
+
+\subsection{Summary of Findings}
+
+\begin{keybox}{Key Takeaways --- Deep Learning}
+  \begin{itemize}
+    \item CNN-based systems match classical CQCC baselines but are limited by global
+      temporal pooling, which discards prosodic dynamics.
+    \item CNN-LSTM hybrids with frequency-only pooling consistently outperform CNNs
+      alone by modelling temporal evolution of spectral features.
+    \item Self-supervised models (wav2vec 2.0) and graph attention models (AASIST)
+      represent the current frontier, achieving EER below 0.02 on ASVspoof 2021.
+    \item The field has progressed rapidly from EER $\approx 0.10$ (CQCC+GMM, 2019)
+      to EER $\approx 0.015$ (RawBoost+ResNet, 2022) on standardised benchmarks.
+  \end{itemize}
+\end{keybox}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Robustness, Codec Effects, and Domain Mismatch}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Channel Mismatch and Codec Compression}
+
+A critical finding across the ASVspoof challenge series is that systems trained on clean
+benchmark data degrade significantly under realistic channel conditions:
+
+\begin{itemize}
+  \item Yi et al.\ (2022), through the ADD 2022 challenge, explicitly evaluated systems
+    under telephone channel conditions, finding EER increases of 5--15 percentage points
+    compared to clean evaluation.
+  \item G.711 $\mu$-law codec compression (8\,kHz, used in PSTN and banking IVR systems)
+    introduces quantisation noise and spectral smoothing that modifies both genuine speech
+    characteristics and the synthetic artefacts that detectors rely upon.
+  \item ADD 2022 found that codec compression causes moderate and predictable degradation,
+    while additive noise (particularly at low SNR) causes more severe and less predictable
+    degradation. The consensus finding is that \textbf{noise is a more serious deployment
+    threat than codec compression} for anti-spoofing systems in telephony environments.
+\end{itemize}
+
+\subsection{Cross-System Generalisation}
+
+Kinnunen et al.\ (2020) investigated how well systems trained on ASVspoof 2019 TTS
+systems generalise to newer or unseen TTS architectures:
+
+\begin{itemize}
+  \item Systems achieving near-zero EER on ASVspoof 2019 test systems sometimes failed
+    on newer TTS architectures that were not present in the training data.
+  \item This generalisation failure arises when models learn \textbf{system-specific
+    artefacts} (peculiar to particular TTS implementations) rather than \textbf{general
+    properties} common to all neural TTS vocoders.
+  \item Models trained on \textbf{diverse} sets of TTS systems, covering multiple
+    synthesis paradigms (statistical parametric, attention-based, flow-based, GAN-based),
+    tend to generalise better to unseen systems than those trained on a narrow set.
+\end{itemize}
+
+\subsection{Data Augmentation Strategies}
+
+Tak et al.\ (2022) demonstrated that \textbf{RawBoost} --- a signal-level data
+augmentation technique applied during training --- significantly improves robustness:
+
+\begin{itemize}
+  \item RawBoost applies random combinations of coloured noise, impulsive noise, and
+    stationary background noise to training waveforms, forcing the model to learn
+    features that are stable under noise variation.
+  \item This training-time augmentation approach outperformed the application of noise
+    reduction at inference time, showing that robustness must be built into the model
+    rather than compensated for at deployment.
+  \item RawBoost combined with ResNet achieved EER $\approx 0.015$ on ASVspoof 2021 LA
+    --- the best published result at the time of this survey.
+\end{itemize}
+
+\subsection{Summary of Findings}
+
+\begin{keybox}{Key Takeaways --- Robustness and Domain Mismatch}
+  \begin{itemize}
+    \item Training on clean data and hoping for channel generalisation does not work ---
+      EER increases of 5--15 percentage points are reported under telephone conditions.
+    \item Noise is a more severe deployment threat than codec compression alone.
+      Both must be addressed, but noise deserves priority attention.
+    \item Cross-system generalisation is a known failure mode. Training on a diverse set
+      of TTS systems covering multiple synthesis paradigms improves robustness to
+      unseen systems.
+    \item Training-time noise augmentation is more effective than inference-time noise
+      reduction for building robust detectors.
+  \end{itemize}
+\end{keybox}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Gaps in the Literature and Project Positioning}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Identified Gaps}
+
+Despite the maturity of the ASVspoof benchmark and a large body of published systems,
+three gaps in the existing literature are directly relevant to this project:
+
+\begin{enumerate}
+  \item \textbf{Banking telephony simulation:} The overwhelming majority of published
+    work evaluates on clean studio-quality recordings, or on the specific ASVspoof 2021
+    evaluation channel. There is comparatively little published work that explicitly
+    simulates banking IVR telephony conditions: 8\,kHz sampling rate, G.711 $\mu$-law
+    codec, and short transactional utterances (3--8 seconds of banking phrases rather
+    than long read sentences).
+
+  \item \textbf{Controlled head-to-head comparison:} Most published work focuses
+    exclusively on either classical feature-based systems or deep learning systems.
+    Few studies directly compare both under \emph{identical data and conditions}, making
+    it difficult to quantify the practical benefit of deep learning over well-engineered
+    handcrafted features in a specific deployment context.
+
+  \item \textbf{Robustness degradation curves:} Published results typically report a
+    single performance number at a specific evaluation condition. Reporting \emph{continuous
+    degradation curves} as a function of SNR level and codec type is rare in the
+    anti-spoofing literature, yet this information is essential for deployment engineering
+    decisions (e.g., setting operating thresholds under expected noise conditions).
+\end{enumerate}
+
+\subsection{Design Decisions Motivated by the Literature}
+
+Table~\ref{tab:decisions} maps each design decision in this project's methodology to
+the specific literature finding that motivated it. These decisions govern the dataset
+construction, feature engineering, and model development planned for Phases 2 and 3.
+
+\medskip
+\begin{center}
+\begin{tabular}{L{3.8cm}L{5.5cm}L{4.7cm}}
+  \toprule
+  \rowcolor{headerbg}
+  \color{white}\textbf{Design Decision} &
+  \color{white}\textbf{Literature Motivation} &
+  \color{white}\textbf{How It Will Be Implemented} \\
+  \midrule
+  40 MFCC coefficients (not 13) &
+  Sahidullah et al.\ (2015): fine spectral structure discriminates vocoders &
+  \texttt{n\_mfcc=40} in \texttt{config.yaml}; 257-dim vector \\
+  \rowcolor{altrow}
+  Delta + delta-delta MFCCs &
+  Sahidullah et al.\ (2015): temporal dynamics are the primary discriminative signal &
+  120 of 257 dimensions encode temporal rate-of-change \\
+  Phase difference features &
+  Patel \& Patil (2015): phase coherence artefacts invisible in magnitude spectrum &
+  2 dimensions; supplements MFCC information \\
+  \rowcolor{altrow}
+  8\,kHz + G.711 preprocessing &
+  ASVspoof 2021; Yi et al.\ (2022): channel mismatch degrades clean-trained models &
+  All utterances processed through codec simulation pipeline \\
+  EER as primary metric &
+  ASVspoof series standard; balances FAR and FRR at single threshold &
+  Threshold set at EER point on validation set \\
+  \rowcolor{altrow}
+  CNN-LSTM as planned DL architecture &
+  Multiple studies: temporal modelling via LSTM improves over CNN-only &
+  2-layer BiLSTM on time-preserving spectrogram front-end \\
+  Edge-TTS as held-out test &
+  Kinnunen et al.\ (2020): cross-system generalisation is a known failure mode &
+  1{,}133 clips from 20 commercial voices; zero training overlap \\
+  \rowcolor{altrow}
+  5/10/15/20\,dB noise variants &
+  Yi et al.\ (2022); Tak et al.\ (2022): noise is primary deployment threat &
+  Dataset pipeline produces augmented variants; planned for Phase 2 training \\
+  Diverse TTS training set &
+  Kinnunen et al.\ (2020): diverse training improves generalisation &
+  ASVspoof 2019 (6 systems) + VITS + Tacotron2 \\
+  \rowcolor{altrow}
+  SVM as classical baseline &
+  ASVspoof 2019 official baseline; well-validated in the literature &
+  RBF kernel with EER-optimal threshold on validation set \\
+  \bottomrule
+\end{tabular}
+\captionof{table}{Literature-to-implementation design decision mapping. These decisions
+govern the methodology for Phases 2 and 3.}
+\label{tab:decisions}
+\end{center}
+
+\begin{notebox}
+  \textbf{Note on scope:} The decisions in Table~\ref{tab:decisions} describe
+  \emph{planned} methodology for Phase 2, informed by the Phase 1 literature survey.
+  They are included here to make the traceability between literature findings and
+  project design explicit. The actual implementation and results will be reported in
+  the Phase 2 interim report.
+\end{notebox}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Summary}
+% ═════════════════════════════════════════════════════════════════════════════
+
+This literature review has surveyed the field of synthetic speech detection from the
+foundational ASVspoof 2015--2021 challenges through to the current state of the art.
+The principal conclusions for this project are:
+
+\begin{enumerate}
+  \item \textbf{Feature design:} Delta-MFCC coefficients (40 coefficients, with
+    $\Delta$ and $\Delta\Delta$) are the strongest discriminators between genuine and
+    synthetic speech. Phase-based features provide complementary, non-redundant
+    information. Both will be included in the planned handcrafted feature vector.
+
+  \item \textbf{Classifier choice:} SVM with RBF kernel is the appropriate classical
+    baseline, consistent with ASVspoof field convention. CNN-LSTM hybrids are the
+    preferred deep learning architecture, motivated by consistent superiority over
+    CNN-only systems in the temporal modelling of spoofing artefacts.
+
+  \item \textbf{Telephony simulation:} Training under realistic banking channel
+    conditions (8\,kHz, G.711) from the outset is essential, not optional. The
+    literature clearly shows that clean-trained models fail under channel mismatch.
+
+  \item \textbf{Robustness evaluation:} Noise is the primary deployment threat.
+    Degradation curves across SNR levels (5--20\,dB) will be produced in Phase 2 to
+    quantify this empirically for the five planned models.
+
+  \item \textbf{Generalisation test:} A held-out system (Microsoft Edge-TTS) not
+    present in any published anti-spoofing training set will be used to measure
+    cross-system generalisation directly, addressing the gap identified by Kinnunen
+    et al.\ (2020).
+\end{enumerate}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section*{References}
+\addcontentsline{toc}{section}{References}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{itemize}[leftmargin=2em, itemsep=5pt]
+  \item Alzantot, M., Wang, Z., and Srivastava, M.B. (2019). Deep Residual Neural
+    Networks for Audio Spoofing Detection.
+    \textit{Proc.\ Interspeech 2019}, 1078--1082.
+
+  \item Baevski, A., Zhou, Y., Mohamed, A., and Auli, M. (2020). wav2vec 2.0: A
+    Framework for Self-Supervised Learning of Speech Representations.
+    \textit{Advances in Neural Information Processing Systems (NeurIPS)}, 33.
+
+  \item Kim, J., Kong, J., and Son, J. (2021). Conditional Variational Autoencoder
+    with Adversarial Learning for End-to-End Text-to-Speech. \textit{ICML 2021}.
+
+  \item Kinnunen, T., Sahidullah, M., Falcone, M., et al. (2020). t-DCF: a Detection
+    Cost Function for the Tandem Assessment of Spoofing Countermeasures and Automatic
+    Speaker Verification.
+    \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}.
+
+  \item McFee, B., Raffel, C., Liang, D., et al. (2015). librosa: Audio and Music
+    Signal Analysis in Python.
+    \textit{Proceedings of the 14th Python in Science Conference}, 18--25.
+
+  \item Nautsch, A., Wang, X., Evans, N., et al. (2021). ASVspoof 2019: Spoofing
+    Countermeasures for the Detection of Synthesized, Converted and Replayed Speech.
+    \textit{IEEE Transactions on Biometrics, Behavior, and Identity Science}.
+
+  \item Panayotov, V., Chen, G., Povey, D., and Khudanpur, S. (2015). Librispeech:
+    An ASR Corpus Based on Public Domain Audio Books. \textit{ICASSP 2015}.
+
+  \item Patel, T.B. and Patil, H.A. (2015). Combining Evidences from Mel Cepstral,
+    Cochlear Filter Cepstral and Instantaneous Frequency Features for Detection of
+    Natural vs.\ Spoofed Speech. \textit{Interspeech 2015}, 2062--2066.
+
+  \item Sahidullah, M., Kinnunen, T., and Hanilci, C. (2015). A Comparison of Features
+    for Synthetic Speech Detection.
+    \textit{Interspeech 2015}, 2087--2091.
+
+  \item Tak, H., Patino, J., Todisco, M., et al. (2022). End-to-End Spectro-Temporal
+    Graph Attention Networks for Speaker Verification Anti-Spoofing and Speech Deepfake
+    Detection. \textit{ASVspoof 2021 Workshop}.
+
+  \item Todisco, M., Wang, X., Vestman, V., et al. (2019). ASVspoof 2019: Future
+    Horizons in Spoofed and Fake Speech Detection. \textit{Interspeech 2019}.
+
+  \item van den Oord, A., Dieleman, S., Zen, H., et al. (2016). WaveNet: A Generative
+    Model for Raw Audio. \textit{arXiv:1609.03499}.
+
+  \item Wang, T., Yi, J., Fu, R., et al. (2021). AASIST: Audio Anti-Spoofing using
+    Integrated Spectro-Temporal Graph Attention Networks. \textit{ICASSP 2022}.
+
+  \item Wang, Y., Skerry-Ryan, R.J., Stanton, D., et al. (2017). Tacotron: Towards
+    End-to-End Speech Synthesis. \textit{Interspeech 2017}.
+
+  \item Yi, J., Fu, R., Tao, J., et al. (2022). ADD 2022: The First Audio Deep
+    Synthesis Detection Challenge. \textit{ICASSP 2022}.
+\end{itemize}
+
+\end{document} 
