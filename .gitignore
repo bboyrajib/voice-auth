@@ -91,3 +91,5 @@ data/processed/
 deploy/venv/
 
 deploy/ffmpeg/
+
+outputs/phase3/cache/

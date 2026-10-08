@@ -1,0 +1,3 @@
+model,ig_completeness_err,P(true) after 10% deletion — Vanilla gradient,P(true) after 10% deletion — SmoothGrad,P(true) after 10% deletion — Integrated Gradients,P(true) after 10% deletion — Random
+CNN,0.012309776619076729,0.6187,0.6005,0.5377,0.8723
+CNN-LSTM,0.012932976707816124,0.752,0.7966,0.6134,0.8709
